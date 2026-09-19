@@ -12,23 +12,27 @@ DEFAULT_PROFILE = {
 }
 
 
+def _normalize_text(value: str, lowercase: bool = False) -> str:
+    """Strip a text field for comparisons, optionally lowercasing it."""
+    if not isinstance(value, str):
+        return ""
+    text = value.strip()
+    return text.lower() if lowercase else text
+
+
 def normalize_title(title: str) -> str:
     """Normalize a song title for comparisons."""
-    if not isinstance(title, str):
-        return ""
-    return title.strip()
+    return _normalize_text(title)
 
 
 def normalize_artist(artist: str) -> str:
     """Normalize an artist name for comparisons."""
-    if not artist:
-        return ""
-    return artist.strip().lower()
+    return _normalize_text(artist, lowercase=True)
 
 
 def normalize_genre(genre: str) -> str:
     """Normalize a genre name for comparisons."""
-    return genre.lower().strip()
+    return _normalize_text(genre, lowercase=True)
 
 
 def normalize_song(raw: Song) -> Song:
